@@ -1,12 +1,14 @@
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.io.File; 
+import java.io.FileNotFoundException;
 
 public class App {
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        String Codice_Fiscale = "";
+        String codFiscale = "";
         String vocali = "aeiouAEIOU";
         Map<String, String> Associazione_mesi = new HashMap<String, String>();
         Associazione_mesi.put("01", "a");
@@ -23,42 +25,52 @@ public class App {
         Associazione_mesi.put("12", "t");
 
         System.out.println("Inserisci Nome");
-        String Nome = scanner.next();
+        String nome = scanner.next();
         System.out.println("Inserisci Cognome");
-        String Cognome = scanner.next();
+        String cognome = scanner.next();
         System.out.println("Inserisci Sesso, M o F");
-        String Sesso = scanner.next();
+        String sesso = scanner.next();
         System.out.println("Inserisci Luogo di Nascita");
-        String Luogo_di_Nascita = scanner.next();
+        String luogoNascita = scanner.next();
         System.out.println("Inserisci Provincia");
-        String Provincia = scanner.next();
+        String provincia = scanner.next();
         System.out.println("Inserisci giorno di nascita");
-        String Giorno_Nascita = scanner.next();
+        String giorno_Nascita = scanner.next();
 
-        for(int i=0; i < Cognome.length(); i++){
-            if(!vocali.contains(""+Cognome.charAt(i))){
-                Codice_Fiscale += Cognome.charAt(i);
+        for(int i=0; i < cognome.length(); i++){
+
+            if(!vocali.contains("" + cognome.charAt(i))){
+                codFiscale += cognome.charAt(i);
             }
-            if( Codice_Fiscale.length() == 3)
+            if(codFiscale.length() == 3)
                 break;
         }
-        for(int i=0; i < Nome.length(); i++){
-            if(!vocali.contains(""+Nome.charAt(i))){
-                Codice_Fiscale += Nome.charAt(i);
+        for(int i=0; i < nome.length(); i++){
+            if(!vocali.contains("" + nome.charAt(i))){
+                codFiscale += nome.charAt(i);
             }
-            if( Codice_Fiscale.length() == 6)
+            if(codFiscale.length() == 6)
                 break;
         }
         
         
-        Codice_Fiscale += Giorno_Nascita.substring(8,10) ; 
-        Codice_Fiscale += Associazione_mesi.get(Giorno_Nascita.substring(3,5));
-        if(Sesso.toUpperCase().contains("F"))
-        Codice_Fiscale += (Integer.parseInt(Giorno_Nascita.substring(0,2)) + 40);
+        codFiscale += giorno_Nascita.substring(8,10) ; 
+        codFiscale += Associazione_mesi.get(giorno_Nascita.substring(3,5));
+        if(sesso.toUpperCase().contains("F"))
+            codFiscale += (Integer.parseInt(giorno_Nascita.substring(0,2)) + 40);
         else
-        Codice_Fiscale += Giorno_Nascita.substring(0,2);
+            codFiscale += giorno_Nascita.substring(0,2);
+
+
+
+        
+      File myObj = new File("comuni.txt");
+      Scanner myReader = new Scanner(myObj);
+      System.out.println(myReader);
+
+        
          
-        System.out.println(Codice_Fiscale);
+        System.out.println(codFiscale);
 
         
     }
